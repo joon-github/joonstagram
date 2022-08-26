@@ -6,37 +6,37 @@ import news from "../static/icons/heart.png";
 import user from "../static/icons/user.png";
 const icons = [
   {
-    id: 1,
+    id: 0,
     name: "home",
     displye: true,
     icon: home,
   },
   {
-    id: 2,
+    id: 1,
     name: "dm",
     displye: false,
     icon: dm,
   },
   {
-    id: 3,
+    id: 2,
     name: "newPost",
     displye: false,
     icon: newPost,
   },
   {
-    id: 4,
+    id: 3,
     name: "explore",
     displye: false,
     icon: explore,
   },
   {
-    id: 5,
+    id: 4,
     name: "news",
     displye: false,
     icon: news,
   },
   {
-    id: 6,
+    id: 5,
     name: "user",
     displye: false,
     icon: user,

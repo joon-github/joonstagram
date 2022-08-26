@@ -1,54 +1,86 @@
-import css from "./top.css";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import Icons from "../Component/icons";
-import { AiOutlineSearch } from "react-icons/ai";
+import styled from "styled-components";
+import searchIcon from "../static/icons/search.png";
+
+const TopDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid rgb(210, 210, 210);
+`;
+
+const TitleSpan = styled.span`
+  font-size: 40px;
+  margin-right: 5%;
+`;
+
+const InputAreaDiv = styled.span`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 5%;
+`;
+
+const InputStyleDiv = styled.div`
+  display: flex;
+  align-items: center;
+  position: absolute;
+  margin-left: 20px;
+  height: 40px;
+`;
+
+const Input = styled.input`
+  background-color: rgb(241, 241, 241);
+  border: none;
+  border-radius: 10px;
+  width: 250px;
+  height: 35px;
+`;
+
+const InputText = styled.span`
+  color: rgb(186, 186, 186);
+`;
+
+const SearchIcon = styled.img`
+  color: rgb(186, 186, 186);
+  margin-right: 10px;
+  width: 20px;
+  opacity: 30%;
+  display: ${(props) => (props.searchIconVisible ? "inline-block" : "none")};
+`;
+
 const Top = () => {
-  const [topMenu, setTopMenu] = useState([
-    true,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
-
-  const [search, setSearch] = useState("");
-  const [isOn, setIsOn] = useState(true);
-  //const [Rander, setRander] = useState(false);
-  const iconSize = 25;
-
-  const inputClick = () => {
-    setIsOn(false);
+  const [searchIconVisible, setSearchIconVisible] = useState(true);
+  const inputImg = useRef(null);
+  const searchInputFocus = useRef(null);
+  const handleInputFocus = () => {
+    setSearchIconVisible(false);
+  };
+  const handleInputBlur = () => {
+    setSearchIconVisible(true);
+  };
+  const handleInputClick = () => {
+    searchInputFocus.current.focus();
   };
 
-  const inputChange = (e) => {
-    setSearch(e.target.value);
-  };
-
-  const onIconSelection = (e) => {
-    const newTopMenu = [...topMenu];
-    newTopMenu.fill(false);
-    newTopMenu[Number(e.target.id)] = true;
-    setTopMenu(newTopMenu);
-  };
   return (
-    <div className="top">
-      <span className="title">Joonstagram</span>
-      <div className="inputArea">
-        <input
-          className="input"
-          type={"text"}
-          onClick={inputClick}
-          onChange={inputChange}
-        ></input>
-        <div className={isOn ? "inputStyle" : "hide"} onClick={inputClick}>
-          <AiOutlineSearch className="serchIcon" size={30} color="lightgray" />
-          <span className="inputText">검색</span>
-        </div>
-      </div>
+    <TopDiv>
+      <TitleSpan>Joonstagram</TitleSpan>
+      <InputAreaDiv>
+        <Input
+          ref={searchInputFocus}
+          onFocus={handleInputFocus}
+          onBlur={handleInputBlur}
+        ></Input>
+        <InputStyleDiv ref={inputImg} onClick={handleInputClick}>
+          <SearchIcon searchIconVisible={searchIconVisible} src={searchIcon} />
+          <InputText>검색</InputText>
+        </InputStyleDiv>
+      </InputAreaDiv>
       <Icons />
-    </div>
+    </TopDiv>
   );
 };
 
