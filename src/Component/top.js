@@ -6,14 +6,18 @@ import searchIcon from "../static/icons/search.png";
 
 const TopDiv = styled.div`
   display: flex;
-  justify-content: center;
+  margin-top: 0px;
+  height: 60px;
+  justify-content: space-around;
   align-items: center;
   border-bottom: 1px solid rgb(210, 210, 210);
 `;
 
 const TitleSpan = styled.span`
-  font-size: 40px;
+  font-size: 30px;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   margin-right: 5%;
+  margin-bottom: 10px;
 `;
 
 const InputAreaDiv = styled.span`
@@ -21,6 +25,7 @@ const InputAreaDiv = styled.span`
   justify-content: flex-start;
   align-items: center;
   margin-left: 5%;
+  margin-bottom: 10px;
 `;
 
 const InputStyleDiv = styled.div`

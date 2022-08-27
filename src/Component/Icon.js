@@ -1,9 +1,9 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
-import icons from "../static/icons";
 
 const IconImg = styled.img`
   width: 25px;
+  margin-left: 5px;
   opacity: ${(props) => (props.selectIconEfect ? "100%" : "30%")};
 `;
 const IconDiv = styled.div`
@@ -22,7 +22,6 @@ const Icon = ({ icon, selectIconEffect, setSelectIconEffect }) => {
     <IconDiv>
       <IconImg
         src={icon.icon}
-        className="onIconSelect"
         onClick={onIconSelection}
         id={icon.id}
         selectIconEfect={selectIconEffect[Number(icon.id)]}

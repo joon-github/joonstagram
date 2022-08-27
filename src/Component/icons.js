@@ -5,7 +5,9 @@ import styled from "styled-components";
 
 const IconsDiv = styled.div`
   display: flex;
-  margin-left: 100px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 50px;
 `;
 
 const Icons = () => {

@@ -1,7 +1,8 @@
 import React from "react";
+import Top from "../Component/top";
 
 const main = () => {
-  return <div>asdf</div>;
+  return <></>;
 };
 
 export default main;
