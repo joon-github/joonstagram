@@ -1,5 +1,5 @@
-import Top from "./Component/top";
-import Home from "./Component/Home";
+import Top from "./HomeComponent/top";
+import Home from "./HomeComponent/Home";
 function App() {
   return (
     <>
