@@ -1,10 +1,12 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const IconImg = styled.img`
   width: 25px;
   margin-left: 5px;
   opacity: ${(props) => (props.selectIconEfect ? "100%" : "30%")};
+  transform: ${(props) =>
+    props.selectIconEfect ? "scale(1.2)" : "scale(1.0)"}; ;
 `;
 const IconDiv = styled.div`
   margin-left: 10%;

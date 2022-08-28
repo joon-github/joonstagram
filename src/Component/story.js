@@ -2,10 +2,16 @@ import React from "react";
 import styled from "styled-components";
 
 const ProfileImg = styled.img`
-  width: 50px;
+  border: 3px solid white;
+  border-radius: 100%;
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
 `;
 const ProfileDiv = styled.div`
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 50px;
   height: 50px;
   margin: 5px;
@@ -13,7 +19,6 @@ const ProfileDiv = styled.div`
   border-radius: 50%;
   background-image: linear-gradient(#fff, #fff),
     linear-gradient(to right, red 0%, orange 100%);
-  background-origin: border-box;
   background-clip: content-box, border-box;
 `;
 const UserName = styled.div`

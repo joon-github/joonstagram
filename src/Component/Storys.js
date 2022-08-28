@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import storyData from "../static/storyProfile";
 import Story from "./story";
 import styled from "styled-components";
@@ -26,16 +26,16 @@ const MoveIconRight = styled.img`
 const MoveIconLeft = styled.img`
   height: 23px;
 `;
-const MoveIconRightDiv = styled.div`
-  display: flex;
+const MoveIconLeftDiv = styled.div`
+  display: ${(props) => (props.IsDisplay ? "flex" : "none")};
   align-items: center;
   justify-content: center;
   background-color: rgba(240, 240, 240, 50);
   border-radius: 50%;
   height: 23px;
 `;
-const MoveIconleftDiv = styled.div`
-  display: flex;
+const MoveIconRightDiv = styled.div`
+  display: ${(props) => (props.IsDisplay ? "flex" : "none")};
   align-items: center;
   justify-content: center;
   background-color: rgba(240, 240, 240, 50);
@@ -55,27 +55,45 @@ const MoveIconDiv = styled.div`
   width: 430px;
 `;
 
-const leftBtn = () => {
-  console.log("a");
-};
-const rightBtn = () => {
-  console.log("a");
-};
 const Storys = () => {
+  const sotorys = useRef(null);
+  const [leftBtnDisplay, SetLeftBtnDisplay] = useState(false);
+  const [rightBtnDisplay, SetRightBtnDisplay] = useState(true);
+  const leftBtn = () => {
+    sotorys.current.scrollTo({ left: 0, behavior: "smooth" });
+    if (sotorys.current.scrollLeft === 0) {
+      SetLeftBtnDisplay(true);
+    }
+  };
+  const rightBtn = () => {
+    sotorys.current.scrollTo({ left: 1000, behavior: "smooth" });
+    console.log(sotorys.current.scrollLeft);
+  };
+  const storysDivScroll = () => {
+    if (sotorys.current.scrollLeft === 0) {
+      SetLeftBtnDisplay(false);
+    } else {
+      SetLeftBtnDisplay(true);
+      SetRightBtnDisplay(true);
+    }
+    if (sotorys.current.scrollLeft === 260) {
+      SetRightBtnDisplay(false);
+    }
+  };
   return (
-    <StorysDiv>
+    <StorysDiv ref={sotorys} onScroll={storysDivScroll}>
       {storyData.map((profile) => {
         return (
           <Story key={profile.id} img={profile.img} name={profile.name}></Story>
         );
       })}
       <MoveIconDiv>
-        <MoveIconleftDiv>
+        <MoveIconRightDiv IsDisplay={rightBtnDisplay}>
           <MoveIconRight src={leftMoveIcon} onClick={rightBtn} />
-        </MoveIconleftDiv>
-        <MoveIconRightDiv>
-          <MoveIconLeft src={rightMoveIcon} onClick={leftBtn} />
         </MoveIconRightDiv>
+        <MoveIconLeftDiv IsDisplay={leftBtnDisplay}>
+          <MoveIconLeft src={rightMoveIcon} onClick={leftBtn} />
+        </MoveIconLeftDiv>
       </MoveIconDiv>
     </StorysDiv>
   );
