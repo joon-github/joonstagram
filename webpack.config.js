@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 // const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 module.exports = {
-  entry: "./src/App.js",
+  entry: "./src/index.js",
   mode: "development",
   module: {
     rules: [
@@ -14,14 +14,26 @@ module.exports = {
       },
       {
         test: /\.jsx?/,
-        loader: "bable-loader",
+        loader: "babel-loader",
         options: {
-          presets: ["@babel/preset-env", "@bable/preset-react"],
+          presets: ["@babel/preset-env", "@babel/preset-react"],
           plugins: ["@babel/plugin-proposal-class-properties"],
         },
       },
       {
         test: /\.png$/,
+        use: ["file-loader"],
+      },
+      {
+        test: /\.jpg$/,
+        use: ["file-loader"],
+      },
+      {
+        test: /\.jpeg$/,
+        use: ["file-loader"],
+      },
+      {
+        test: /\.webp$/,
         use: ["file-loader"],
       },
     ],
@@ -35,7 +47,7 @@ module.exports = {
   ],
 
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "doce"),
     filename: "[name].js",
   },
 };
