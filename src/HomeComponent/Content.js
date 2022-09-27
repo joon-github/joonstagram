@@ -1,5 +1,24 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
+import dummyData from "../static/storyProfile";
+import rightMoveIcon from "../static/icons/left.png";
+import leftMoveIcon from "../static/icons/right.png";
+
+const MoveIconRight = styled.img`
+  height: 23px;
+`;
+const MoveIconLeft = styled.img`
+  height: 23px;
+`;
+const MoveIconRightDiv = styled.div`
+  position: fixed;
+  display: "flex";
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(240, 240, 240, 50);
+  border-radius: 50%;
+  height: 23px;
+`;
 
 const ContentDiv = styled.div`
   border: 1px solid rgb(210, 210, 210);
@@ -7,6 +26,30 @@ const ContentDiv = styled.div`
   background-color: white;
   margin: 10px;
   border-radius: 10px;
+  .rightMoveIcon {
+    position: relative;
+    top: 300px;
+    left: 400px;
+    display: "flex";
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(240, 240, 240, 70%);
+    border-radius: 50%;
+    height: 23px;
+    max-width: 23px;
+  }
+  .leftMoveIcon {
+    position: relative;
+    top: 300px;
+    left: 10px;
+    display: "flex";
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(240, 240, 240, 70%);
+    border-radius: 50%;
+    height: 23px;
+    max-width: 23px;
+  }
 `;
 
 const HeaderDiv = styled.div`
@@ -37,6 +80,7 @@ const HeaderProfile = styled.img`
 `;
 
 const UserNameDiv = styled.div`
+  display: flex;
   font-weight: bold;
   width: 330px;
   margin: 10px;
@@ -77,10 +121,31 @@ const MeneIconImgDiv = styled.div`
   width: 35px;
   height: 35px;
   margin-left: 3px;
+  transition: all, 0.3s;
+  &:hover {
+    cursor: pointer;
+  }
+  img {
+    width: 22px;
+    &.heartIcon {
+      filter: invert(25%) sepia(90%) saturate(5927%) hue-rotate(354deg)
+        brightness(108%) contrast(127%);
+      animation-name: scaleBounce;
+      animation-duration: 0.15s;
+      animation-duration: alternate;
+      /* animation-duration: infinite; */
+    }
+    @keyframes scaleBounce {
+      from {
+        scale: 1;
+      }
+      to {
+        scale: 1.3;
+      }
+    }
+  }
 `;
-const MeneIconImg = styled.img`
-  width: 22px;
-`;
+
 const ContentListIcon = styled.img`
   margin-top: 3px;
   margin: 3px;
@@ -100,7 +165,29 @@ const MeneSectionDiv = styled.div`
   width: 300px;
 `;
 
+const LikeConteiner = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: medium;
+  margin-left: 10px;
+  div {
+    font-weight: bold;
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  img {
+    height: 20px;
+    width: 20px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 5px;
+  }
+`;
+
 const Content = (data) => {
+  const [selectIcon, setSelectIcon] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
   const dotRendring = () => {
     const result = [];
     for (let i = 0; i < data.data.contents.length; i++) {
@@ -112,9 +199,14 @@ const Content = (data) => {
   };
   const contentDIv = useRef(null);
   const handleCententsScroll = () => {
-    if (contentDIv.current.scrollLeft < 645) {
+    if (contentDIv.current.scrollLeft === 1) {
       contentDIv.current.scrollTo({ left: 0, behavior: "smooth" });
     }
+    console.log(contentDIv.current.scrollLeft);
+  };
+  const handleLike = () => {
+    setSelectIcon(!selectIcon);
+    selectIcon ? setLikeCount(0) : setLikeCount(+1);
   };
   return (
     <ContentDiv>
@@ -122,7 +214,15 @@ const Content = (data) => {
         <ProfileDiv>
           <HeaderProfile src={data.data.img} className="profile" />
         </ProfileDiv>
-        <UserNameDiv>{data.data.name}</UserNameDiv>
+        <UserNameDiv>
+          <div className="rightMoveIcon">
+            <MoveIconLeft src={leftMoveIcon}></MoveIconLeft>
+          </div>
+          <div className="leftMoveIcon">
+            <MoveIconLeft src={rightMoveIcon}></MoveIconLeft>
+          </div>
+          {data.data.name}
+        </UserNameDiv>
         <MoreIconImg src={data.data.icons.moreIcon}></MoreIconImg>
       </HeaderDiv>
       <ContentMainDiv ref={contentDIv} onScroll={handleCententsScroll}>
@@ -134,13 +234,17 @@ const Content = (data) => {
       </ContentMainDiv>
       <MenusDiv>
         <MeneIconImgDiv>
-          <MeneIconImg src={data.data.icons.heartIcon}></MeneIconImg>
+          <img
+            onClick={handleLike}
+            className={selectIcon ? "heartIcon" : null}
+            src={data.data.icons.heartIcon}
+          ></img>
         </MeneIconImgDiv>
         <MeneIconImgDiv>
-          <MeneIconImg src={data.data.icons.chatIcon}></MeneIconImg>
+          <img src={data.data.icons.chatIcon}></img>
         </MeneIconImgDiv>
         <MeneIconImgDiv>
-          <MeneIconImg src={data.data.icons.shareIcon}></MeneIconImg>
+          <img src={data.data.icons.shareIcon}></img>
         </MeneIconImgDiv>
         <MeneSectionDiv>
           {dotRendring()}
@@ -152,10 +256,13 @@ const Content = (data) => {
       <div className="하단영역">
         <div className="하단메뉴">
           <div className="좋아요 영역">
-            <div className="좋아요 누른사람1"></div>
-            <div className="좋아요 누른사람2"></div>
-            <div className="좋아요 누른사람3"></div>
-            <div className="~외 n명이 좋아합니다.">좋아요 212개</div>
+            {selectIcon ? (
+              <LikeConteiner>
+                <img src={dummyData[9].img}></img>
+                <div>{dummyData[9].name}</div>님<div>{likeCount}명</div>이
+                좋아합니다.
+              </LikeConteiner>
+            ) : null}
           </div>
           <div className="댓글 영역">
             <div className="최상위 댓글 영역">

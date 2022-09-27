@@ -81,7 +81,7 @@ const Top = () => {
         ></Input>
         <InputStyleDiv ref={inputImg} onClick={handleInputClick}>
           <SearchIcon searchIconVisible={searchIconVisible} src={searchIcon} />
-          <InputText>검색</InputText>
+          {searchIconVisible ? <InputText>검색</InputText> : null}
         </InputStyleDiv>
       </InputAreaDiv>
       <Icons />
